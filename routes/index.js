@@ -126,4 +126,20 @@ router.post("/upload",isLoggedIn,upload.single("image"),async function(req,res){
   res.redirect("/feed");
 });
 
+router.get('/delete/post/:id', isLoggedIn, async function(req, res) {
+  try {
+    const postId = req.params.id;
+    // Find the post and delete it
+    await postModel.findOneAndDelete({ _id: postId });
+    // Redirect to the feed page after deletion
+    res.redirect('/feed');
+  } catch (error) {
+    console.error('Error deleting post:', error);
+    res.redirect('/feed'); // Redirect to feed page in case of an error
+  }
+});
+
+
+
+
 module.exports = router;
