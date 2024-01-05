@@ -19,7 +19,7 @@ app.set('view engine', 'ejs');
 //and this code is allowing data to be saved.
 app.use(expressSession({
   resave:false,
-  saveUninitaialized:false,
+  saveUninitialized: false,
   secret:"raaz rahende do"
 }));
 app.use(passport.initialize());
@@ -41,6 +41,10 @@ app.use(function(req, res, next) {
   next(createError(404));
 });
 
+app.use((req, res, next) => {
+  console.log('Request for', req.url);
+  next();
+});
 // error handler
 app.use(function(err, req, res, next) {
   // set locals, only providing error in development
