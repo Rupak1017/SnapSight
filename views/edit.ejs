@@ -6,9 +6,12 @@
       <a class="text-sm" href="/feed"><i class="ri-home-line"></i> home</a>
     </div>
     <div class="flex flex-col items-center gap-2 mt-20">
-      <div class="image w-20 h-20 bg-sky-100 rounded-full"></div>
-      <button id="editbtn"  class="text-blue-500 capitalize">edit picture</button>
+      <div class="image w-20 h-20 bg-sky-100 rounded-full">
+        <img id="imagePreview" class="w-full h-full rounded-full" src="/images/uploads/<%=user.profileImage%>">
+      </div>
+      <button id="editbtn" class="text-blue-500 capitalize">edit picture</button>
     </div>
+
     <div class="gap-5 px-4 mt-10">
       <h3 class="text-lg leading-none">Edit Account Details</h3>
       <hr class="opacity-30 my-3">
@@ -23,10 +26,22 @@
   </div>
 
   <script>
-    document.querySelector("#editbtn")
-    .addEventListener("click",function(){
-      document.querySelector("#imageinput").click()
-    
-    })
+    document.querySelector("#editbtn").addEventListener("click", function () {
+      document.querySelector("#imageinput").click();
+    });
+  
+    document.querySelector("#imageinput").addEventListener("change", function (event) {
+      const preview = document.querySelector("#imagePreview");
+      const file = event.target.files[0];
+  
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          preview.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+      }
+    });
   </script>
+  
 <% include ./partials/footer.ejs %>
