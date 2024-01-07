@@ -27,9 +27,34 @@ router.get('/profile',isLoggedIn,async function(req, res) {
   res.render('profile', {footer: true,user});
 });
 
-router.get('/search',isLoggedIn, function(req, res) {
-  res.render('search', {footer: true});
+router.get('/profile/:username', isLoggedIn, async function(req, res) {
+  const username = req.params.username;
+  const user = await userModel.findOne({ username }).populate("posts");
+  res.render('profile', { footer: true, user });
 });
+
+
+
+router.get('/search', isLoggedIn, async function (req, res) {
+  try {
+    const searchTerm = req.query.username;
+
+    if (!searchTerm) {
+      return res.render('search', { footer: true, data: [] });
+    }
+
+    const regex = new RegExp(`^${searchTerm}`, 'i');
+    const searchData = await userModel.find({ username: regex });
+
+    res.render('search', { footer: true, data: searchData });
+  } catch (error) {
+    console.error('Error fetching search data:', error);
+    res.render('search', { footer: true, data: [] });
+  }
+});
+
+
+
    
 router.get('/like/post/:id',isLoggedIn, async function(req, res) {
   const user= await userModel.findOne({ username:req.session.passport.user});
@@ -138,8 +163,6 @@ router.get('/delete/post/:id', isLoggedIn, async function(req, res) {
     res.redirect('/feed'); // Redirect to feed page in case of an error
   }
 });
-
-
 
 
 module.exports = router;
