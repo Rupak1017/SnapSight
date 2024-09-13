@@ -1,7 +1,10 @@
 const mongoose=require("mongoose");
 const plm=require("passport-local-mongoose");
 
-mongoose.connect("mongodb+srv://rupakkapoor07:kLxAUfdF6sCgUSxU@instaclone.jzhall3.mongodb.net/");
+mongoose.connect(process.env.MONGO_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+});
 
 const userSchema= mongoose.Schema({
   username:String,
