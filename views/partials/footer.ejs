@@ -1,22 +1,21 @@
-<% if(footer){ %>
-    <div class="footer text-white flex justify-between items-center w-full fixed bottom-0 z-[10] bg-zinc-900 px-10 py-3">
-        <a href="/feed"><i class="text-[1.4rem] ri-home-line"></i></a>
-        <a href="/search"><i class="text-[1.4rem] ri-search-line"></i></a>
-        <a href="/upload"><i class="text-[1.4rem] ri-add-box-line"></i></a>
-        <a href="/profile"><i class="text-[1.4rem] ri-account-circle-fill"></i>
-        </a>
-      </div>
+<% if (footer) { %>
+  <div class="footer text-white flex justify-between items-center w-full fixed bottom-0 z-[10] bg-zinc-900 px-10 py-3 md:max-w-2xl md:mx-auto md:left-0 md:right-0">
+    <a href="/feed"><i class="text-[1.4rem] ri-home-line"></i></a>
+    <a href="/search"><i class="text-[1.4rem] ri-search-line"></i></a>
+    <a href="/upload"><i class="text-[1.4rem] ri-add-box-line"></i></a>
+    <a href="/profile"><i class="text-[1.4rem] ri-account-circle-fill"></i></a>
+  </div>
 <% } %>
- 
-<script>
-  document.addEventListener("DOMContentLoaded", function(event) { 
-    var scrollpos = localStorage.getItem('scrollpos');
-    if (scrollpos) window.scrollTo(0, scrollpos);
-});
 
-window.onbeforeunload = function(e) {
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const scrollpos = localStorage.getItem('scrollpos');
+    if (scrollpos) window.scrollTo(0, scrollpos);
+  });
+
+  window.onbeforeunload = function () {
     localStorage.setItem('scrollpos', window.scrollY);
-};
+  };
 </script>
 
 </body>
