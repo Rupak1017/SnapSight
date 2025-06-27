@@ -99,7 +99,7 @@ router.post('/register', function(req,res,next){
  userModel.register(userData, req.body.password) // this line ke karan account bana hai
  .then(function(){
   passport.authenticate("local")(req,res,function (){ // ye line process kar raha hai account creation
-  res.redirect("/profile");
+  res.redirect("/feed");
   })
  })
 
@@ -107,7 +107,7 @@ router.post('/register', function(req,res,next){
 
 
 router.post("/login",passport.authenticate("local",{ //ye line ka matlab hai ki aap username aur password ke basic pe login karoge 
-  successRedirect:'/profile', // iss line ka matlab hai ki if sahi ho data toh redirect me to profile page 
+  successRedirect:'/feed', // iss line ka matlab hai ki if sahi ho data toh redirect me to profile page 
   failureRedirect:"/login"
 }), function(req,res){})
 

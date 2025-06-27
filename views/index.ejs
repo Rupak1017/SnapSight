@@ -1,15 +1,43 @@
 <% include ./partials/header.ejs %>
-  <div class="w-full min-h-screen bg-black text-white py-5 flex flex-col items-center justify-center">
-    <div class="flex flex-col items-center gap-5 px-4">
-      <img class="w-1/2" src="/images/snapsight.jpg" alt="">
-      <form class="w-full" action="/register" method="post">
-        <input class="px-3 mt-2 py-2 border-2 border-zinc-800 rounded-md block w-full bg-zinc-900" type="text" placeholder="username" name="username">
-        <input class="px-3 mt-2 py-2 border-2 border-zinc-800 rounded-md block w-full bg-zinc-900" type="email" placeholder="email" name="email">
-        <input class="px-3 mt-2 py-2 border-2 border-zinc-800 rounded-md block w-full bg-zinc-900" type="text" placeholder="name" name="name">
-        <input class="px-3 mt-2 py-2 border-2 border-zinc-800 rounded-md block w-full bg-zinc-900" type="password" placeholder="password" name="password">
-        <input class="w-full bg-blue-500 px-3 py-3 rounded-md mt-2" type="submit" value="Make New Account">
+
+<!-- ✅ Desktop popup with blur -->
+<div id="desktop-popup" class="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50 hidden">
+  <div class="bg-white text-black rounded-xl p-6 w-11/12 max-w-md shadow-2xl text-center space-y-4">
+    <h2 class="text-xl font-semibold">Desktop View Detected</h2>
+    <p class="text-sm">This application is optimized for mobile view. For the best experience, please use a mobile device or reduce your window size.</p>
+    <button onclick="closePopup()" class="mt-2 bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700 transition">
+      Continue Anyway
+    </button>
+  </div>
+</div>
+
+<script>
+  function closePopup() {
+    document.getElementById('desktop-popup').classList.add('hidden');
+  }
+
+  if (window.innerWidth > 768) {
+    document.getElementById('desktop-popup').classList.remove('hidden');
+  }
+</script>
+
+<!-- ✅ Actual landing page content -->
+<div class="w-full min-h-screen bg-black text-white flex items-center justify-center px-4 py-10">
+  <div class="w-full max-w-md md:max-w-xl lg:max-w-2xl bg-zinc-900/20 p-6 rounded-xl shadow-xl">
+    <div class="flex flex-col items-center gap-6">
+      <img class="w-40 md:w-48 lg:w-56" src="/images/snapsight.jpg" alt="SnapSight Logo">
+
+      <form class="w-full space-y-4" action="/register" method="post">
+        <input class="px-4 py-3 border-2 border-zinc-800 rounded-md w-full bg-zinc-900" type="text" placeholder="username" name="username">
+        <input class="px-4 py-3 border-2 border-zinc-800 rounded-md w-full bg-zinc-900" type="email" placeholder="email" name="email">
+        <input class="px-4 py-3 border-2 border-zinc-800 rounded-md w-full bg-zinc-900" type="text" placeholder="name" name="name">
+        <input class="px-4 py-3 border-2 border-zinc-800 rounded-md w-full bg-zinc-900" type="password" placeholder="password" name="password">
+        <input class="w-full bg-blue-500 px-4 py-3 rounded-md font-semibold hover:bg-blue-600 transition" type="submit" value="Make New Account">
       </form>
-      <span>Already have an account ? <a href="/login" class="text-blue-500">Log In</a></span>
+
+      <span class="text-sm">Already have an account? <a href="/login" class="text-blue-500 hover:underline">Log In</a></span>
     </div>
   </div>
+</div>
+
 <% include ./partials/footer.ejs %>
