@@ -7,7 +7,8 @@
       <input id="inputusername" class="ml-1 w-full bg-zinc-900 outline-none text-zinc-400" type="text" placeholder="search username">
     </div>
 
-    <div class="users">
+    <!-- Placeholder while typing -->
+    <div class="users" id="userList">
       <% if (data && data.length > 0) { %>
         <% data.forEach(function(elem) { %>
           <a href="/profile/<%= elem.username %>" class="outline-none">
@@ -22,34 +23,50 @@
             </div>
           </a>
         <% }) %>
+      <% } else { %>
+        <% for (let i = 0; i < 5; i++) { %>
+          <div class="text-white flex items-center gap-2 mt-5 animate-pulse">
+            <div class="w-[11vw] md:w-12 md:h-12 h-[11vw] bg-zinc-800 rounded-full"></div>
+            <div class="flex flex-col gap-2">
+              <div class="w-24 h-3 bg-zinc-800 rounded-md"></div>
+              <div class="w-16 h-2 bg-zinc-700 rounded-md"></div>
+            </div>
+          </div>
+        <% } %>
       <% } %>
     </div>
   </div>
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.3/axios.min.js" integrity="sha512-JWQFV6OCC2o2x8x46YrEeFEQtzoNV++r9im8O8stv91YwHNykzIS2TbvAlFdeH0GVlpnyd79W0ZGmffcRi++Bw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.3/axios.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script>
-  const inp = document.querySelector("#inputusername")
+  const inp = document.querySelector("#inputusername");
+  const userList = document.querySelector(".users");
+
   inp.addEventListener("input", function () {
     let clutter = "";
     axios.get(`/username/${inp.value}`)
       .then(function (data) {
-        clutter = "";
-        data.data.forEach(function (elem) {
-          clutter += ` <a href="/profile/${elem.username}" class="outline-none">
-            <div class="text-white flex items-center gap-2 mt-5">
-              <div class="image w-[11vw] md:w-12 md:h-12 h-[11vw] rounded-full overflow-hidden">
-                <img src="/images/uploads/${elem.profileImage}" alt="">
-              </div>
-              <div class="text">
-                <h3>${elem.username}</h3>
-                <h4 class="text-xs opacity-30 leading-none">${elem.name}</h4>
-              </div>
-            </div>
-          </a>`
-        })
-        document.querySelector(".users").innerHTML = clutter;
-      })
+        if (data.data.length === 0) {
+          clutter = `<p class="text-white text-sm mt-5">No users found</p>`;
+        } else {
+          data.data.forEach(function (elem) {
+            clutter += `
+              <a href="/profile/${elem.username}" class="outline-none">
+                <div class="text-white flex items-center gap-2 mt-5">
+                  <div class="image w-[11vw] md:w-12 md:h-12 h-[11vw] rounded-full overflow-hidden">
+                    <img src="/images/uploads/${elem.profileImage}" alt="">
+                  </div>
+                  <div class="text">
+                    <h3>${elem.username}</h3>
+                    <h4 class="text-xs opacity-30 leading-none">${elem.name}</h4>
+                  </div>
+                </div>
+              </a>`;
+          });
+        }
+        userList.innerHTML = clutter;
+      });
   });
 </script>
 
